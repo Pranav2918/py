@@ -167,3 +167,12 @@ async def webhook(req: Request):
     asyncio.create_task(process_task(task_id))
 
     return {"status": "processing started"}
+
+@app.get("/task/{task_id}")
+def get_full_task(task_id: str):
+    task = client.get_task(task_id)
+
+    if not task:
+        return {"error": "Task not found"}
+
+    return task
